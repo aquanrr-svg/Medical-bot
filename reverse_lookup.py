@@ -1,5 +1,4 @@
-"""
-reverse_lookup.py — Search medical terms by meaning keyword.
+"""everse_lookup.py — Search medical terms by meaning keyword.
 e.g. user types "inflammation" → returns all terms containing -itis etc.
 Also supports morpheme reverse search: "what terms use brady-?"
 """
@@ -8,14 +7,13 @@ import json
 import os
 from quiz import QUIZ_TERMS
 
-_DB_PATH = os.path.join(os.path.dirname(__file__), "data", "morphemes.json")
+_DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "morphemes.json")
 with open(_DB_PATH) as f:
     _DB = json.load(f)
 
 PREFIXES = _DB["prefixes"]
 ROOTS = _DB["roots"]
 SUFFIXES = _DB["suffixes"]
-
 
 def search_by_meaning(keyword: str) -> list[dict]:
     """
@@ -37,7 +35,6 @@ def search_by_meaning(keyword: str) -> list[dict]:
 
     return results
 
-
 def search_terms_by_meaning(keyword: str) -> list[dict]:
     """
     Search through the quiz term bank for terms whose meaning contains keyword.
@@ -49,7 +46,6 @@ def search_terms_by_meaning(keyword: str) -> list[dict]:
         for t, m, h in QUIZ_TERMS
         if kw in m.lower()
     ]
-
 
 def morpheme_reverse(part: str) -> list[dict]:
     """
