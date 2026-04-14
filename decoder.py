@@ -9,7 +9,7 @@ import os
 import re
 
 # Load database once at import
-_DB_PATH = os.path.join(os.path.dirname(__file__), "data", "morphemes.json")
+_DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "morphemes.json")
 with open(_DB_PATH, "r") as f:
     _DB = json.load(f)
 
@@ -137,7 +137,6 @@ def decode(term: str) -> dict:
         "unmatched": unmatched if not found else None,
     }
 
-
 def _reconstruct(parts: list, original_term: str) -> str:
     if not parts:
         return None
@@ -165,7 +164,6 @@ def _reconstruct(parts: list, original_term: str) -> str:
         return " + ".join(m.capitalize() for m in meanings)
     else:
         return " + ".join(m.capitalize() for m in meanings)
-
 
 def list_all_morphemes(mtype: str = None) -> dict:
     """Return all morphemes of a given type (prefix/root/suffix) or all."""
