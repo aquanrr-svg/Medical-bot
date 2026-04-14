@@ -12,13 +12,11 @@ import os
 import time
 from quiz import QUIZ_TERMS
 
-_DATA_DIR = os.path.join(os.path.dirname(__file__), "data", "flashcards")
+_DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "flashcards")
 os.makedirs(_DATA_DIR, exist_ok=True)
-
 
 def _path(user_id: int) -> str:
     return os.path.join(_DATA_DIR, f"{user_id}.json")
-
 
 def _load(user_id: int) -> dict:
     p = _path(user_id)
@@ -38,11 +36,9 @@ def _load(user_id: int) -> dict:
         }
     return {"cards": cards, "total_reviewed": 0}
 
-
 def _save(user_id: int, data: dict):
     with open(_path(user_id), "w") as f:
         json.dump(data, f, indent=2)
-
 
 def get_due_card(user_id: int) -> dict | None:
     """Return the next due card, or None if all reviewed for today."""
@@ -65,7 +61,6 @@ def get_due_card(user_id: int) -> dict | None:
         "wrong_count": card["wrong_count"],
         "due_count": len(due),
     }
-
 
 def mark_result(user_id: int, term: str, correct: bool) -> dict:
     """Update card interval based on result. Returns updated stats."""
@@ -95,7 +90,6 @@ def mark_result(user_id: int, term: str, correct: bool) -> dict:
         "remaining_today": remaining,
         "total_reviewed": data["total_reviewed"],
     }
-
 
 def get_stats(user_id: int) -> dict:
     data = _load(user_id)
